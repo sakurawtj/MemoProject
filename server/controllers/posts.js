@@ -1,4 +1,5 @@
 import PostMessage from "../models/postMessage.js"
+import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
     try {
@@ -20,4 +21,33 @@ export const createPost = async (req, res) => {
         res.status(409).json({ message: error.message });
 
     }
+}
+
+export const updatePost = async (req, res) => {
+    const {id : _id} = req.params;
+    const { title, message, creator, selectedFile, tags } = req.body;
+    if(!mongoose.Types.ObjectId.isValid(_id)) {
+        return res.status(404).send('no post with that id')
+    } else {
+        const updatedPost = { creator, title, message, tags, selectedFile, _id: _id };
+       
+        await PostMessage.findByIdAndUpdate(_id, updatedPost, {new: true});
+        res.json(updatePost);
+    }
+
+}
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+    await PostMessage.findByIdAndRemove(id);
+    res.json({message: 'post deleted successfully'});
+}
+
+export const likePost = async (req, res) => {
+    const {id} = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id');
+    const post = await PostMessage.findById(id);
+    const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new : true})
+    res.json(updatedPost)
 }

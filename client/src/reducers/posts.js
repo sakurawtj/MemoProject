@@ -1,4 +1,4 @@
-import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { FETCH_ALL, CREATE, UPDATE, DELETE, FAVORATE } from '../constants/actionTypes';
 export default function posts(posts = [], action) {
     switch (action.type) {
         case FETCH_ALL:
@@ -7,7 +7,7 @@ export default function posts(posts = [], action) {
         case CREATE:
             return [...posts, action.payload];
         case UPDATE:
-        case LIKE:
+        case FAVORATE:
             return posts.map((post) => post._id === action.payload._id ? action.payload : post);
         case DELETE:
             return posts.filter((post) => post._id !== action.payload);

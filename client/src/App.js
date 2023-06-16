@@ -6,7 +6,6 @@ import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import { getPosts } from './actions/posts';
 import useStyles from './styles';
-import memories from './images/memories.png';
 
 const App = () => {
     const [currentId, setCurrentId] = useState(0);
@@ -21,8 +20,7 @@ const App = () => {
         <Container maxWidth="lg">
             <AppBar className={classes.appBar} position="static" color="inherit">
                 
-                <Typography className={classes.heading} variant="h2" align="center">Memories</Typography>
-                <img className={classes.image} src={memories} alt="icon" height="60" width="60" />
+                <Typography className={classes.heading} variant="h2" align="center">Memo</Typography>
             </AppBar>
             <Grow in>
                 <Container>
